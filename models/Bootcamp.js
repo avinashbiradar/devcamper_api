@@ -12,8 +12,6 @@ const BootcampSchema = new mongoose.Schema({
     description: {
         type: String,
         required: [true, 'please add a description'],
-        unique: true,
-        trim: true,
         maxlength: [500, "Description can not be more than 500 characters"]
     },
     website: {
@@ -30,7 +28,7 @@ const BootcampSchema = new mongoose.Schema({
     email: {
         type: String,
         match: [
-            /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/,
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
             'Please add a valid email'
         ]
     },
@@ -39,7 +37,7 @@ const BootcampSchema = new mongoose.Schema({
         required: [true, 'please add an address']
     },
     location: {
-        //geo-JSON Point
+        //Geo-JSON Point
         type: {
             type: String,
             enum: ['Point'],
@@ -51,11 +49,10 @@ const BootcampSchema = new mongoose.Schema({
             index: '2dsphere'
         },
         formattedAddress: String,
-        Street: String,
+        street: String,
         city: String,
         state: String,
         zipcode: String,
-        zip: String,
         country: String,
     },
     careers: {
@@ -72,7 +69,7 @@ const BootcampSchema = new mongoose.Schema({
         ]
     },
     averageRating: {
-        type: String,
+        type: Number,
         min: [1, 'Rating must be at least 1'],
         max: [10, 'Rating must can not be more than 10'],
     },
@@ -89,7 +86,7 @@ const BootcampSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
-    jobGurantee: {
+    jobGuarantee: {
         type: Boolean,
         default: false,
     },
@@ -100,7 +97,7 @@ const BootcampSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now,
-    },
+    }
 })
 
 module.exports = mongoose.model('Bootcamp', BootcampSchema)
